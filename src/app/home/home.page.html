@@ -1,20 +1,37 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+    <img src="https://tarifador.rapidmotos.com/storage/logos/logo.webp" alt="rapid" width="150">
+
+    @if (photos.length > 0) {
+      <ion-button class="p-2 font-bold text-white" slot="end" shape="round">
+        Enviar
+        <ion-icon name="send"></ion-icon>
+      </ion-button>
+    }
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="takePicture()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">Blank</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  @if (photos.length > 0) {
+    <div class="grid grid-cols-2 align-middle place-items-center">
+      @for (photo of photos; track $index) {
+
+        <app-image-card (click)="deletePicture($index)" [image]="photo"/>
+      }
+    </div>
+  }
+
 </ion-content>
