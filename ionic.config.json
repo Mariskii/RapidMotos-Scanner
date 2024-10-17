@@ -1,0 +1,7 @@
+{
+  "name": "Rapidmotos scan",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
