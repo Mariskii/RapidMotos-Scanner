@@ -10,7 +10,7 @@ export const routes: Routes = [
     loadComponent: () => import('./auth/auth-page.component').then((m) => m.AuthPageComponent),
   },
   {
-    path: '',
+    path: '**',
     redirectTo: 'auth',
     pathMatch: 'full',
   },
