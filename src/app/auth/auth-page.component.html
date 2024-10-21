@@ -4,22 +4,23 @@
 
     <img class="w-[150px] h-[65px] mb-5 mt-5" src="../../assets/rapidLogo.webp" alt="rapidmotos_logo">
 
-    <p class="text-2xl m-7 font-bold">APP INCIDENCIAS</p>
+    <p class="text-2xl m-7 font-bold text-white">APP INCIDENCIAS</p>
 
-    <div [formGroup]="formLogin" class="flex flex-col gap-5 w-full">
+    <div [formGroup]="formLogin" class="flex flex-col gap-5 w-full text-white">
 
       <ion-input labelPlacement="stacked" placeholder="Usuario" class="custom-input" type="text" fill="outline" formControlName="userName">
-        <ion-icon slot="start" class="text-red-600" name="person" aria-hidden="true" size="large"></ion-icon>
+        <ion-icon slot="start" class="text-red-600" name="person" aria-hidden="true"></ion-icon>
       </ion-input>
 
       <ion-input id="afa" labelPlacement="stacked" class="custom-input" placeholder="Contraseña" fill="outline" type="password" formControlName="password">
-        <ion-icon slot="start" size="large" name="lock-closed" class="text-red-600"></ion-icon>
+        <ion-icon slot="start" name="lock-closed" class="text-red-600"></ion-icon>
       </ion-input>
     </div>
 
     <ion-button
       (click)="login()"
-      class="p-2 m-8 font-bold text-white w-full">
+      size="large"
+      class="pt-2 m-10 font-bold text-white w-full">
       Iniciar Sesión
     </ion-button>
   </div>

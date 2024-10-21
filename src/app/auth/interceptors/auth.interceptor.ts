@@ -15,6 +15,8 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(req).pipe(
     catchError(err => {
+      console.log(err);
+
       localStorage.removeItem('accessToken');
       return of(err);
     })

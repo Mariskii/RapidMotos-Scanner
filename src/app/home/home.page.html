@@ -2,36 +2,22 @@
   <ion-toolbar>
     <img src="https://tarifador.rapidmotos.com/storage/logos/logo.webp" alt="rapid" width="150">
 
-    @if (photos.length > 0) {
-      <ion-button class="p-2 font-bold text-white" slot="end" shape="round">
-        Enviar
-        <ion-icon name="send"></ion-icon>
-      </ion-button>
-    }
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
 
-  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button (click)="takePicture()">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
+  <div class="flex flex-col gap-4 items-center text-center h-full justify-center text-white">
+    <h2 class="font-bold text-2xl m-3">Recuerda primero fotografiar el albarán y matrícula de la moto.</h2>
 
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <p class="text-xl m-3 text-gray-300">Todas las imágenes se guardarán  en la nube de forma automática.</p>
 
-  @if (photos.length > 0) {
-    <div class="grid grid-cols-2 align-middle place-items-center">
-      @for (photo of photos; track $index) {
+    <p class="font-bold text-xl m-3 text-white">En caso de que la cámara no se abra haz click en el botón de bajo.</p>
 
-        <app-image-card (click)="deletePicture($index)" [image]="photo"/>
-      }
-    </div>
-  }
+    <ion-button shape="round" (click)="takePicture()">
+      <ion-icon size="large" name="camera-outline"></ion-icon>
+    </ion-button>
+  </div>
 
 </ion-content>
