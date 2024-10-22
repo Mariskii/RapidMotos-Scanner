@@ -1,11 +1,13 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonFab, IonFabButton, IonIcon , IonList, IonItem, IonThumbnail, IonButton,IonLoading, ToastController, AlertController } from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonFab, IonFabButton, IonIcon , IonList, IonItem, IonThumbnail, IonButton,IonLoading, ToastController, AlertController, IonPopover, IonAlert } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { cameraOutline } from 'ionicons/icons';
+import { cameraOutline, caretBack, caretDown, caretDownOutline, logOutOutline, person } from 'ionicons/icons';
 import { ImageCardComponent } from './components/image-card/image-card.component';
 import { DropboxService } from './service/dropbox.service';
 import { catchError, of } from 'rxjs';
+import { AuthService } from '../auth/service/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -26,21 +28,33 @@ import { catchError, of } from 'rxjs';
     ImageCardComponent,
     IonButton,
     IonLoading,
+    IonPopover,
+    IonAlert,
   ],
 })
 export class HomePage implements OnInit {
 
   dropboxService = inject(DropboxService);
+  authService = inject(AuthService);
   toastController = inject(ToastController);
   alertController = inject(AlertController);
+  router = inject(Router);
+
+  @ViewChild('popover') popover:any;
 
   uploadingFhoto:boolean = false;
+  isPopoverOpen:boolean = false;
+
+  userName?:string;
 
   constructor() {
-    addIcons({cameraOutline})
+    addIcons({cameraOutline, person, logOutOutline, caretDownOutline})
   }
 
   ngOnInit(): void {
+
+    this.getUserName();
+
     this.requestCameraPermissions().then(granted => {
       if (granted) {
         this.takePicture();
@@ -48,6 +62,15 @@ export class HomePage implements OnInit {
         console.error("Permisos de cámara no concedidos");
       }
     });
+  }
+
+  getUserName() {
+
+    const storedUserName = localStorage.getItem('userName');
+
+    if(storedUserName) {
+      this.userName = storedUserName;
+    }
   }
 
   async requestCameraPermissions() {
@@ -114,5 +137,39 @@ export class HomePage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  presentPopover(e: Event) {
+    this.popover.event = e;
+    this.isPopoverOpen = true;
+  }
+
+  async ensureLogout() {
+    const alert = await this.alertController.create({
+      header: '¿Estas seguro?',
+      message: 'No se ha podido subir la imagen a la nube',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+        {
+          text: 'OK',
+          handler: () => {
+            this.logout();
+          }
+        }
+      ],
+    });
+
+    await alert.present();
+  }
+
+  logout() {
+
+    this.popover.dismiss();
+
+    this.authService.logout();
+    this.router.navigate(['/auth']);
   }
 }

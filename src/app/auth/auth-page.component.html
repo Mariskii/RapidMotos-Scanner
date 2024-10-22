@@ -15,6 +15,10 @@
       <ion-input id="afa" labelPlacement="stacked" class="custom-input" placeholder="Contraseña" fill="outline" type="password" formControlName="password">
         <ion-icon slot="start" name="lock-closed" class="text-red-600"></ion-icon>
       </ion-input>
+
+      @if (failedLogin) {
+        <p class="text-red-600 text-center font-bold text-lg">No se ha podido iniciar sesión.</p>
+      }
     </div>
 
     <ion-button

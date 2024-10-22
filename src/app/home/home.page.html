@@ -1,8 +1,26 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <img src="https://tarifador.rapidmotos.com/storage/logos/logo.webp" alt="rapid" width="150">
+    <div class="flex w-full justify-between">
+      <img class="p-3" src="https://tarifador.rapidmotos.com/storage/logos/logo.webp" alt="rapid" width="150">
 
+      <div (click)="presentPopover($event)" class="text-center flex items-center">
+        <ion-icon name="caret-down-outline"></ion-icon>
+        <ion-icon size="large" name="person" class="text-red-600"></ion-icon>
+        <p class="m-3 text-white text-lg">{{ userName }}</p>
+      </div>
 
+      <ion-popover #popover [isOpen]="isPopoverOpen" (didDismiss)="isPopoverOpen = false">
+        <ng-template>
+          <ion-content class="ion-padding">
+            <ion-button (click)="ensureLogout()" class="flex items-center justify-center">
+              LogOut
+              <ion-icon class="ml-2" name="log-out-outline" size="large"></ion-icon>
+            </ion-button>
+          </ion-content>
+        </ng-template>
+      </ion-popover>
+
+    </div>
   </ion-toolbar>
 </ion-header>
 

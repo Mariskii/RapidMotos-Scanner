@@ -5,6 +5,10 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
   let token = localStorage.getItem('accessToken');
 
+  if (req.url.includes('/api/auth/log-in')) {
+    return next(req);
+  }
+
   if(token) {
     req = req.clone({
       setHeaders: {
@@ -15,7 +19,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(req).pipe(
     catchError(err => {
-      console.log(err);
 
       localStorage.removeItem('accessToken');
       return of(err);

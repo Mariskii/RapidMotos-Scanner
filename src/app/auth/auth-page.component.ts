@@ -50,15 +50,22 @@ export class AuthPageComponent {
       this.authService.login(user).pipe(
         catchError(error => {
           this.failedLogin = true;
-          return of(error);
+          return of();
       })
       )
       .subscribe(res => {
+
         this.failedLogin = false;
 
         if(res.status === 'success') {
+
           localStorage.setItem('accessToken',res.accessToken);
+          localStorage.setItem('userName',res.userName);
+
+          this.formLogin.reset();
+
           this.router.navigate(['/home']);
+
         } else {
           this.failedLogin = true;
         }
