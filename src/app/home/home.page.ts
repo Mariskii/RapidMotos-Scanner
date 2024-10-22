@@ -147,10 +147,10 @@ export class HomePage implements OnInit {
   async ensureLogout() {
     const alert = await this.alertController.create({
       header: '¿Estas seguro?',
-      message: 'No se ha podido subir la imagen a la nube',
+      message: 'Estas a punto de cerrar sesión',
       buttons: [
         {
-          text: 'Cancel',
+          text: 'Cancelar',
           role: 'cancel',
         },
         {
